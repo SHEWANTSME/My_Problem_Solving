@@ -41,25 +41,36 @@
 #define sc second
 using namespace std;
 int a, b, c;
+int visited[201][201];
 vector<int>v;
-pair<int, int>pp1;
-pair<int, int>pp2;
-pair<int, int>pp3;
+//pair<int, int>pp1;
+//pair<int, int>pp2;
+//pair<int, int>pp3;
 void DFS(int aa, int bb, int cc) {
-	if (aa == 0) {	v.push_back(cc); return;}
-	if (cc - bb >= 0) {
-		DFS(aa, pp2.ff, cc - bb);
-	}
+	if (visited[aa][bb])return;
+	if (aa == 0) {	v.push_back(cc); }
+	visited[aa][bb] = 1;
+	if (aa + bb > b) DFS((aa + bb) - b, b, cc);
+	if(aa+bb<=b) DFS(0, aa + bb, cc);
+	if (bb + aa > a) DFS(a, (bb + aa) - a, cc);
+	if(aa+bb<=a) DFS(bb + aa, 0, cc);
+	if (cc + aa > a) DFS(a, bb, (cc + aa) - a);
+	if(aa+cc<=a) DFS(cc + aa, bb, 0);
+	if (cc + bb > b) DFS(aa, b, (cc + bb) - b);
+	if(cc+bb<=b) DFS(aa, cc + bb, 0);
+	DFS(aa, 0, bb + cc);
+	DFS(0, bb, aa + cc);
 }
 int main() {
 	cin >> a >> b >> c;
 	if (a == b and b == c) {
 		cout << c << endl; exit(0);
 	}
-	pp1.ff = a;	pp1.sc= 0;
-	pp2.ff= b; pp2.sc= 0;
-	pp3.ff= c; pp3.sc = c;
-	DFS(pp1.sc, pp2.sc, pp3.ff);
+	//pp1.ff = a;	pp1.sc= 0;
+	//pp2.ff= b; pp2.sc= 0;
+	//pp3.ff= c; pp3.sc = c;
+	DFS(0, 0, c);
+	//DFS(pp1.sc, pp2.sc, pp3.ff);
 	sort(v.begin(), v.end());
 	for (auto &e : v) 
 		cout << e << " ";
