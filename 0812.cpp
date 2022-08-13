@@ -1,4 +1,4 @@
-// 그림과 함께 잘 이해해 보도록 노력해보자
+ //그림과 함께 잘 이해해 보도록 노력해보자
 #include<iostream>
 #include<queue>
 #include<vector>
@@ -64,42 +64,54 @@ int main() {
 # include<iostream>
 #include<queue>
 #include<algorithm>
+#include<vector>
 #define pp pair<int,int>
-#define INF 1e9
+#define INF 1e9+10
 #define ff first
 #define sc second
 #define fastio cin.tie(0), cout.tie(0), ios::sync_with_stdio(0)
 using namespace std;
 int n, m, x;
-int dis[1001];
-vector<pp>near[1001];
-int main() {
-	cin >> n >> m >> x;
-	for (int i = 0; i <= 1000; i++) dis[i] = INF;
-	for (int i = 0; i < m; i++) {
-		int a,b,w; // a to b가중치 w
-		cin >> a>> b>> w;
-		near[a].push_back({ w,b }); 
-	}
-	//Using Mean heap
-
-	for (int i = 1; i <= n; i++) {
-		dis[i] = 0;
-		priority_queue<pp, vector<pp>, greater<pp>>pq;
-		pq.push({ dis[i],i });
-		while (not pq.empty()) {
-			int weight = pq.top().ff; // 가중치
-			int point = pq.top().sc; // 정점
-			pq.pop();
-			if (dis[point] != weight) continue;
-			for (auto &next : near[point]) {
-				int next_point = next.ff; int next_weight = next.sc;
-
+vector<pp>way[1001];
+vector<int>dis;
+int visited[1001];
+void Dijkstra(int tt) {
+	dis.clear();
+	dis.resize(n + 1, INF);
+	dis[tt] = 0;
+	priority_queue<pp, vector<pp>, greater<pp>>pq;
+	pq.push({ dis[tt], tt });
+	while (not pq.empty()) {
+		int cost = pq.top().ff;
+		int now = pq.top().sc;
+		pq.pop();
+		if (cost > dis[now])continue;
+		for (auto & next : way[now]) {
+			int _next = next.sc;
+			int _next_cost = next.ff+cost;
+			if (_next_cost < dis[_next]) {
+				dis[_next] = _next_cost;
+				pq.push({ _next_cost, _next });
 			}
-
-
 		}
 	}
-	
-
 }
+int main() {
+	cin >> n >> m >> x;
+	for (int i = 0; i < m; i++) {
+		int st, end, time;
+		cin >> st >> end >> time;
+		way[st].push_back({ time, end }); // minheap인데 time이 작은 순서가 우선순위가 되어야하니까 time이 먼저 오는거임
+	}
+	for (int i = 1; i <= n; i++) {
+		Dijkstra(i);
+		visited[i] = dis[x];
+	}
+	Dijkstra(x);
+	int ans = 0;
+	for (int i = 1; i <= n; i++) {
+		visited[i] += dis[i];
+		ans = max(ans, visited[i]);
+	}
+	cout << ans << endl;
+}// 이해는 되었으니 RE구현이 필요한 시점이다.
