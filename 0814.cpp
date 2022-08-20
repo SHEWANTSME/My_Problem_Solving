@@ -1,23 +1,29 @@
-#include<iostream>
-#include<algorithm>
+#include<iostream> // 7568 덩치
 #include<vector>
-#define ll long long
+#define ff first
+#define sc second
+#define pp pair<int,int>
 using namespace std;
-// 2110번 공유기설치
-// parametric search
-vector<ll>v;
-int n, c;
-// 아니 이렇게 풀면 안될거같음.. retry..
+int n;
+vector<pp>v;
 int main() {
-	cin >> n >> c;
-	for (int i = 0; i < n; i++) {
-		int t; cin >> t; v.push_back(t);
+	cin >> n; int nn = n;
+	while (n--) {
+		int weight, height;
+		cin >> weight >> height;
+		v.push_back({ weight,height });
 	}
-	sort(v.begin(), v.end());
-	ll first = 0;
-	ll last = v.size() - 1;
-	while (first <= last) {
-		ll mid = (v.size() - 1) / 2;
-		
+	for (auto &i : v) {
+		int x = 1;
+		for (auto &j : v) {
+			if (i.ff < j.ff and i.sc < j.sc)x++;
+		}cout << x << " ";
+		//cout << e.first << " " << e.second << endl;
 	}
+	/*for (int i = 0; i < nn; i++) {
+		int x = 1;
+		for (int j = 0; j < nn; j++) {
+			if (v[i].ff < v[j].ff and v[i].sc < v[j].sc)x++;
+		}cout << x << " ";
+	}*/
 }
