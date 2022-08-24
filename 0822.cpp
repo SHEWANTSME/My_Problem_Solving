@@ -73,3 +73,67 @@ int main() {
 } // 시간초과.. stack 두개쓰면 시간초과나는듯 -> pair로 해보자.!
 
 
+
+// 새로운 코드
+#include<iostream>
+#include<stack>
+#include<vector> 
+#include<algorithm>
+#define ll long long
+#define pp pair<ll,ll>
+#define sc second
+#define ff first
+using namespace std;
+int n;
+stack<pp>stk;
+vector<ll>v;
+int main() {
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		int t; cin >> t;
+		while (not stk.empty() and stk.top().sc < t) 
+			stk.pop();
+		if (stk.empty()) cout << 0 << " ";
+		else cout << stk.top().ff << " ";
+		stk.push({ i,t });
+	}
+}
+
+// using priority_queue
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<algorithm>
+#define pp pair<int,int>
+#define ff first
+#define sc second
+#define fastio cin.tie(0), cout.tie(0), ios::sync_with_stdio(0)
+using namespace std;
+int n;
+priority_queue<pp,vector<pp> , greater<pp>>pq;
+vector<int>v;
+int ans[500001];
+int main() {
+	cin >> n;
+	v.push_back(-100);
+	for (int i = 1; i <= n; i++) {
+		int t; cin >> t; v.push_back(t);
+	}
+	pq.push({ v[n] , n });
+	for (int i = n - 1; i >= 1; i--) {
+		while (not pq.empty()) {
+			pp now = pq.top();
+			bool signal = 0;
+			if (now.ff <= v[i]) {
+				pq.pop();
+				ans[now.sc] = i;
+				signal = 1;
+			}
+			if (signal == 0)break;
+		}
+		pq.push({ v[i],i });
+	}
+	for (int i = 1; i <= n; i++)
+		cout << ans[i] << " ";
+	
+}
