@@ -1,38 +1,38 @@
-//#include<iostream>
-//#include<algorithm>
-//#include<queue>
-//#define ll long long
-//using namespace std;
-//int n;
-//int arr[1001];
-//ll dp1[1001][2];
-//ll dp2[1001][2];
-//ll dp[1001];
-//ll cnt[1001];
-//priority_queue<ll>pq;
-//int main() {
-//	cin >> n;
-//	for (int i = 1; i <= n; i++) {
-//		cin >> arr[i];
-//	}
-//	dp[1] = arr[1];
-//	cnt[1] = 1;
-//	for (int i =2; i <= n; i++) {
-//		// now 랑 dp[i-1]로 비교해야하지 않나?
-//		int now = arr[i];
-//		if (now <= dp[i - 1]) {
-//			dp[i] = dp[i - 1] + now;
-//			cnt[i] = cnt[i - 1] + 1;
-//		}
-//		else {
-//			pq.push(cnt[i - 1]);
-//			dp[i] = now;
-//			cnt[i] = 1;
-//		}
-//	}
-//	if (not pq.empty()) { cout << max(pq.top(),cnt[n]) << endl; }
-//	else cout << cnt[n] << endl;
-//}
+#include<iostream>
+#include<algorithm>
+#include<queue>
+#define ll long long
+using namespace std;
+int n;
+int arr[1001];
+ll dp1[1001][2];
+ll dp2[1001][2];
+ll dp[1001];
+ll cnt[1001];
+priority_queue<ll>pq;
+int main() {
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cin >> arr[i];
+	}
+	dp[1] = arr[1];
+	cnt[1] = 1;
+	for (int i =2; i <= n; i++) {
+		// now 랑 dp[i-1]로 비교해야하지 않나?
+		int now = arr[i];
+		if (now <= dp[i - 1]) {
+			dp[i] = dp[i - 1] + now;
+			cnt[i] = cnt[i - 1] + 1;
+		}
+		else {
+			pq.push(cnt[i - 1]);
+			dp[i] = now;
+			cnt[i] = 1;
+		}
+	}
+	if (not pq.empty()) { cout << max(pq.top(),cnt[n]) << endl; }
+	else cout << cnt[n] << endl;
+}
 
 //  아 문제 이해 잘못..
 
