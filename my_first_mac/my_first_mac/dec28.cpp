@@ -82,8 +82,11 @@ int main(){
            // ans.push_back(now);
         }
         else{
+            //if(vec.empty()) vec.push_back({s1,num});
+            //else  vec.push_back({vec.back().first+s1,num});
             empty+=s1;
             vec.push_back({empty,num});
+            
             //ans.push_back(empty);
         }
     }
