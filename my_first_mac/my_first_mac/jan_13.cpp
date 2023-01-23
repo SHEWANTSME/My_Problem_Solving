@@ -1,5 +1,6 @@
 #include<iostream>
-#include<string>
+#include<string> // substring을 사용하면 효율적으로 문자열 cut 가능
+// str.substr(a,b); -> a인덱스에서 시작하는 b개(b길이의 문자만큼) 잘라서 str 반환
 // 프로그래머스 괄호변환
 using namespace std;
 string Rec(string p) {
