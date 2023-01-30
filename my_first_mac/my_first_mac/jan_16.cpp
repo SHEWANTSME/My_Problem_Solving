@@ -9,8 +9,7 @@ vector<int>line[11];
 vector<int>st;// 시작 (0) 담는 벡터
 int line_check[11]; // 지금 위치가 체크된 호선이면 더이상 환승을 안하니까
 // 가능한 총 호선의 개수인 10개'만' check가능하게끔 짜면 됨
-// 지하철 호선의 개수의 맥시멈이 10개고, 0(시작점)이 있는 벡터가 몇호선인지가 중요한거니까
-long long anss = 1e14;
+// 지하철 호선의 개수의 맥시멈이 10개고, 0(시작점)이 있는 벡터가 몇호선인지가 중요한거니까long long anss = 1e14;
 void DFS(int line_num , int cnt){// 호선번호, 환승횟수
     line_check[line_num]=1;
     for(auto &e : line[line_num]){
