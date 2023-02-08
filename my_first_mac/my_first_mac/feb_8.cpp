@@ -4,7 +4,7 @@
 using namespace std;
 int main(){
     vector<int>v{4,3,3,4,5,5,1,2,1,3};
-    auto x = unique(v.begin() , v.end());
+    auto x = unique(v.begin() , v.end()); // unique 자체로는 근처값들만
     cout<<" 이것은 unique 후 나온 결과"<<*x<<endl;
     v.erase(x , v.end());
     for(auto &e : v)
