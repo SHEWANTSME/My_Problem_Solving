@@ -83,16 +83,27 @@
 #include<algorithm>
 #define ll long long
 using namespace std;
+// 생각을 좀 하면 됨
 string sum(string a, string b) {
+    // a = 1000 , as = 4
+    // b= 100 , bs=3
     int as = a.size(); int bs = b.size();
-    int diff = max(as, bs) - min(as, bs);
+    cout << as << " "<<bs<<endl;
+    int diff = max(as, bs) - min(as, bs); // diff =1
+    cout<< diff<<endl;
     if(as < bs) for(int i=0; i<diff; i++) a = "0" + a;
-    if(as > bs) for(int i=0; i<diff; i++) b = "0" + b;
-
+    if(as > bs) for(int i=0; i<diff; i++) b = "0" + b;//b = 0100
+    cout<<a << " " << b << endl;
+    as=a.size();bs=b.size(); // as든 bs든 diff가 1이상이면 갱신이 되는건 자명하니까 재정의 해줘야지
     vector<int> v;
     for(int i=0; i<as; i++) v.push_back(a[i] - '0' + b[i] - '0');
-
+    // 자꾸 니가 char이랑 int를 헷갈려 하는데 char : '0'이 int로 48 이라는 것만 알아두셈
+    // 1000
+    // 0100
+    // v = [1,1,0,0]
+   // cout<<v.size()<<endl;
     reverse(v.begin(), v.end());
+    //v = [0,0,1,1]
 // for(int i=0; i<v.size(); i++) {
 //         if(v[i] < 10) continue;
 
@@ -101,26 +112,36 @@ string sum(string a, string b) {
 
 //         v[i] %= 10;
 //     }
+// 1000+100 = 1100이면 v에 v = [0,0,1,1]일텐데
+// 456 , 789의 덧셈이면
+// 654
+// 987 의 덧셈이라고 볼 수 있고
+// a : 6 5 4
+// b : 9 8 7 
+//    15 13  11 인데
+// ->  5 14  11
+// ->  5  4  12
+// -> 5 4    1  2 
     for(int i=0; i<v.size(); i++) {
         if(v[i] < 10) continue;
         if(i==v.size()-1){v.push_back(v[i]/10);v[i] %= 10;}
         if(i!=v.size()-1){
-            v[i+1] += v[i]/10;
-        v[i] %= 10;
+            v[i+1] += v[i]/10;// v[i]/10이면 현재값을 10으로 나눈 몫이 ㄷ
+        v[i] %= 10; // 10으로 나눈 나머지값을 v[i]에 대입
         }
         
     }
-    reverse(v.begin(), v.end());
+    // 참고로 dsym -> debug symbol file -> 굳이 github 올릴때 같이 올릴 필요 x
+    reverse(v.begin(), v.end());// v = [1,1,0,0]
     string ans="";
-    if(v.empty())return "씨발";
-    else{
-        for(auto &e : v){
-        if(e>=0 and e<=9)ans+=e+48;// ascii '0' = 48이니까 숫자 0은 
+   
+    for(auto &e : v){
+        if(e>=0 and e<=9)ans.push_back(e+48);// ascii '0' = 48이니까 숫자 0은 
         else continue;
     }
-
+    cout<<ans<<endl; 
     char last = ans[ans.size()-1];
-    if(last>='2'){// '0'=48 , '1'= 49  , '2'= 50 이니까
+    if(last>='2'){// '0'=48 , '1'= 49  , '2'= 50 이니까
         ans.pop_back();
         ans.push_back(last-2);
         return ans;
@@ -133,7 +154,7 @@ string sum(string a, string b) {
             //bool tmp= false;
             bool chk= false;
             if(last=='1') temp.push_back('9');
-            else if(last =='0')temp.push_back('8');//1100이면 89
+            else if(last =='0')temp.push_back('8');//1100이면 8
             for(int i = ans.size()-2 ; i>=0 ; i--){
                 char now = ans[i];
                 if(chk==true){
@@ -161,7 +182,7 @@ string sum(string a, string b) {
        
     }
    // return ans;
-    }
+    
     // for(auto &e : v){
     //     cout << e << " ";
     // }
@@ -179,20 +200,13 @@ string sum(string a, string b) {
 
 
 ll n;
-int main(){// 1000+100 = 1100 -2 = 1008
-    cout<<sum("100","1000")<<endl; // 2331 -2 = 2331
+int main(){// 1000+100 = 1100 -2 = 1008 근데 결과는 108
+    cout<<sum("1","1")<<endl; // 2331 -2 = 2331
+}
     //cout<<sum(sum("2000","."),"2000")<<endl; -> this doesn't work correctly
     //cout<<sum("456" , "78")<<endl;
 //     cin>>n;
 //    if(n<=2)cout<<n<<endl;
 //    else cout<<n*2-2<<endl; 
-int a =3;
-int b = 7;
-while(b>a){
-    a++;
-}
-cout<<a << " "<<b<<endl;
-cout<<"fuckyou"<<endl;
-}
 // debug할떄 그냥 fn+f5 누르고 하자 나머지는 동일
 // 그리고 함수 호출하고 ㅅㅂ 왜 안되지?
